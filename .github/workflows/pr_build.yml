@@ -67,6 +67,13 @@ jobs:
           mv app/build/outputs/apk/dev/release/app-dev-release.apk strato-pr${{ github.event.number }}-release.apk
           mv app/build/outputs/apk/dev/reldebug/app-dev-reldebug.apk strato-pr${{ github.event.number }}-reldebug.apk
 
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: strato-pr${{ github.event.number }}-release.apk
+          path: strato-pr${{ github.event.number }}-release.apk
+
       - name: Upload Release APK
         if: ${{ vars.UPLOAD_PR_ARTIFACTS == 'true' }}
         uses: actions/upload-artifact@v4
